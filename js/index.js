@@ -11,22 +11,22 @@ function toggleColourMode(mode) {
     });
 }
 
-const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
-    const { top, left, bottom, right } = el.getBoundingClientRect();
-    const { innerHeight, innerWidth } = window;
-    return partiallyVisible
-        ? ((top > 0 && top < innerHeight) ||
-              (bottom > 0 && bottom < innerHeight)) &&
-              ((left > 0 && left < innerWidth) ||
-                  (right > 0 && right < innerWidth))
-        : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
+const elementIsVisibleInViewport = (el) => {
+    const bBox = el.getBoundingClientRect();
+    return (bBox.top > 0 && bBox.bottom < window.innerHeight + 50)
 };
 
 const highlightScreenshots = function () {
     [].forEach.call(document.querySelectorAll('img'), function (el) {
         if (elementIsVisibleInViewport(el)) {
+            if (el.id == "scr_reminders") {
+                console.log('Adding highlight to ' + el.id)
+            }
             el.classList.add("highlight");
         } else {
+            if (el.id == "scr_reminders") {
+                console.log('Removing highlight from ' + el.id)
+            }
             el.classList.remove("highlight");
         }
     });
